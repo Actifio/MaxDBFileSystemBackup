@@ -1,6 +1,6 @@
 # Background
 
-If you have a MaxDB database on a physical server or a VM in an MSCS cluster we can protect the file system containing the DB drives and get application consistency with this script. The only requirements are:
+If you have a MaxDB database on a physical server or a VM in an MSCS cluster you can protect the file system containing the DB drives and get application consistency with this script. The only requirements are:
 
 1)  Actifio Connector must be installed on the host
 2)  File systems must be discovered.   If more than one file system needs to be protected please create a consistency group.  If the DB is on the C:\ or a drive with data you don't wish to protect, use a StartPath.  A StartPath is an advanced setting for the app, set using the AGM GUI.   A screen shot showing this is located at the bottom of this readme.
@@ -134,6 +134,11 @@ ID   UKT  Win   TASK       APPL Current          Nice  Queue          Command ti
 
 Done processing commands
 ```
+### Event logging
+The script is written so when run manually, all output is echoed to the screen.   When run by the Actifio Connector all output will be logged in the UDSAgent.log file that can be found in C:\Program Files\Actifio\logs\UDSAgent.log
+This means if you are debugging events, use this log file.
+
+
 ### Incremental backup versus full backup
 
 Because this method using changed file tracking, you may find the backup size is larger than expected because entire data files are copied.    You can use the GUI to set a Connector Option to force changed block comparison during file copy.  This is known as --low-splash and is set as shown in the screen capture below.  Note that a low splash snapshot will take longer but consume less snapshot pool space.   You need to decide which is more important.
