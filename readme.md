@@ -3,8 +3,8 @@
 If you have a MaxDB database on a physical server or a VM in an MSCS cluster we can protect the file system containing the DB drives and get application consistency with this script. The only requirements are:
 
 1)  Actifio Connector must be installed on the host
-2)  File systems must be discovered.   If more than one file system needs to be protected please create a consistency group.  If the DB is on the C:\ or a drive with data you don't wish to protect, use a StartPath.
-3)  The bat file in this repo must be renamed to match the APPID, so if the appid is 1566877, then the bat file should be named appid.1566877.bat
+2)  File systems must be discovered.   If more than one file system needs to be protected please create a consistency group.  If the DB is on the C:\ or a drive with data you don't wish to protect, use a StartPath.  A StartPath is an advanced setting for the app, set using the AGM GUI.
+3)  The bat file in this repo must be renamed to match the APPID, so if the appid is 1566877, then the bat file should be named appid.1566877.bat   You can use the CLI command reportapps to display App IDs.
 4)  The renamed bat file should be in c:\Program Files\Actifio\Scripts
 
 Effectively the order of events will be:
@@ -17,7 +17,7 @@ Effectively the order of events will be:
 
 # Important points
 
-This technique suspends the log writer, which suspends update transactions.  Therefore this procedure needs to be run as quickly as possible.  VMware snapshots are good for this because snapshot creation at the ESX level is very fast, allowing the log writer to be resumed quickly.
+This technique suspends the log writer, which suspends update transactions.  Therefore this procedure needs to be run as quickly as possible.  VMware snapshots are good for this because snapshot creation at the VSS level is very fast, allowing the log writer to be resumed quickly.
 
 By suspending the log writer, no more Checkpoints (also called Savepoints) can be written.  This means the last Savepoint is used during database restart or restore.
 
