@@ -134,3 +134,8 @@ ID   UKT  Win   TASK       APPL Current          Nice  Queue          Command ti
 
 Done processing commands
 ```
+### Incremental backup versus full backup
+
+Because this method using changed file tracking, you may find the backup size is larger than expected because entire data files are copied.    You can use the GUI to set a Connector Option to force changed block comparison during file copy.  This is known as --low-splash and is set as shown in the screen capture below:
+
+
