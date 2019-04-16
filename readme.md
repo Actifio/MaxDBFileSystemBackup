@@ -136,6 +136,6 @@ Done processing commands
 ```
 ### Incremental backup versus full backup
 
-Because this method using changed file tracking, you may find the backup size is larger than expected because entire data files are copied.    You can use the GUI to set a Connector Option to force changed block comparison during file copy.  This is known as --low-splash and is set as shown in the screen capture below:
+Because this method using changed file tracking, you may find the backup size is larger than expected because entire data files are copied.    You can use the GUI to set a Connector Option to force changed block comparison during file copy.  This is known as --low-splash and is set as shown in the screen capture below.  Note that a low splash snapshot will take longer but consume less snapshot pool space.   You need to decide which is more important.
 
 ![alt text](https://github.com/Actifio/MaxDBFileSystemBackup/blob/master/images/2019-04-16_12-55-05.jpg)
