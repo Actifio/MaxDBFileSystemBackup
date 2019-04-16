@@ -3,7 +3,7 @@
 If you have a MaxDB database on a physical server or a VM in an MSCS cluster we can protect the file system containing the DB drives and get application consistency with this script. The only requirements are:
 
 1)  Actifio Connector must be installed on the host
-2)  File systems must be discovered.   If more than one file system needs to be protected please create a consistency group.  If the DB is on the C:\ or a drive with data you don't wish to protect, use a StartPath.  A StartPath is an advanced setting for the app, set using the AGM GUI.
+2)  File systems must be discovered.   If more than one file system needs to be protected please create a consistency group.  If the DB is on the C:\ or a drive with data you don't wish to protect, use a StartPath.  A StartPath is an advanced setting for the app, set using the AGM GUI.   A screen shot showing this is located at the bottom of this readme.
 3)  The bat file in this repo must be renamed to match the APPID, so if the appid is 1566877, then the bat file should be named appid.1566877.bat   You can use the CLI command reportapps to display App IDs.
 4)  The renamed bat file should be in c:\Program Files\Actifio\Scripts
 
@@ -138,4 +138,4 @@ Done processing commands
 
 Because this method using changed file tracking, you may find the backup size is larger than expected because entire data files are copied.    You can use the GUI to set a Connector Option to force changed block comparison during file copy.  This is known as --low-splash and is set as shown in the screen capture below:
 
-
+![alt text](https://github.com/Actifio/MaxDBFileSystemBackup/blob/master/images/2019-04-16_12-55-05.jpg)
