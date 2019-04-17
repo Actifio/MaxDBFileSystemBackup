@@ -8,7 +8,7 @@ REM THE INFO BELOW IS FAIRLY SELF APPARENT, SHAME ON ME FOR MAKING YOU ENTER A P
 @set DATABASE=MaxDB
 @set USERNAME=DBADMIN
 @set PASSWORD=Passw0rd9
-@set PATH=C:\Program Files\sdb\MaxDB\pgm
+@set "PATH=C:\Program Files\sdb\MaxDB\pgm"
 REM THE SECTION ABOVE NEEDS CUSTOMIZATION
 
 REM  This is where the script is driven by the connector supplying one parm,   you can use this for testing the script
