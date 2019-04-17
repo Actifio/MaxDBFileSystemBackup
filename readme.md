@@ -21,6 +21,9 @@ This technique suspends the log writer, which suspends update transactions.  The
 
 By suspending the log writer, no more Checkpoints (also called Savepoints) can be written.  This means the last Savepoint is used during database restart or restore.
 
+# Error handling
+
+The script uses simple error code checking to determine if the exit is clean or dirty.   As written, if the freeze fails, then the snapshot will fail.   This is on the assumption that you do not want a 'fuzzy' image.    
 
 # Supporting documentation
 
