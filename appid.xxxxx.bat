@@ -50,7 +50,6 @@ echo ***** log active state
 dbmcli.exe -d %DATABASE% -u %USERNAME%,%PASSWORD% -uUTL -c show active 
 echo ***** issue resume 
 dbmcli.exe -d %DATABASE% -u %USERNAME%,%PASSWORD% -uUTL -c util_execute resume logwriter 
-IF %errorlevel% NEQ 0 GOTO :dirtyexit
 echo ***** log active state after resume 
 dbmcli.exe -d %DATABASE% -u %USERNAME%,%PASSWORD% -uUTL -c show active 
 IF %ERRORLEVEL% EQU 0 GOTO cleanexit
