@@ -1,5 +1,5 @@
 @echo off
-REM Don't remove the echo off above or the UDSAgent.log wilget silly comments
+REM Don't remove the echo off above or the UDSAgent.log will get silly comments
 REM Note that you can use this script for any DB where the DB can be programatically quiesced.   
 REM Just change syntax in thaw/freeze/abort section to make it relevant and any customize data in the section below.
 
