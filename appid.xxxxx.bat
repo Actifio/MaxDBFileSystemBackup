@@ -13,33 +13,35 @@ REM THE SECTION ABOVE NEEDS CUSTOMIZATION
 
 REM  This is where the script is driven by the connector supplying one parm,   you can use this for testing the script
 set TASK=%1
-echo %TASK%
 if %TASK% equ init goto :handle_init
 if %TASK% equ fini goto :handle_fini
 if %TASK% equ freeze goto :handle_freeze
 if %TASK% equ thaw goto :handle_thaw
 if %TASK% equ abort goto :handle_abort
-echo Either no valid task was given for the script to run, use init, fini, freeze, thaw or abort
-goto :eof
+echo Invalid task was given for the script to run, use init, fini, freeze, thaw or abort
+goto :dirtyexit
 
 :handle_init
 echo Got an init command.  Nothing to do
-goto :end
+goto :cleanexit
 
 :handle_fini
 echo Got an fini command.  Nothing to do
-goto :end
+goto :cleanexit
 
 :handle_freeze
 echo ------------------------------------------ 
 echo About to freeze %DATABASE% due to freeze request
 echo ***** log active state 
-dbmcli.exe -d %DATABASE% -u %USERNAME%,%PASSWORD% -uUTL -c show active 
+dbmcli.exe -d %DATABASE% -u %USERNAME%,%PASSWORD% -uUTL -c show active
+IF %errorlevel% NEQ 0 GOTO :dirtyexit
 echo ***** issue suspend 
 dbmcli.exe -d %DATABASE% -u %USERNAME%,%PASSWORD% -uUTL -c util_execute suspend logwriter 
+IF %errorlevel% NEQ 0 GOTO :dirtyexit
 echo ***** log active state after suspend 
-dbmcli.exe -d %DATABASE% -u %USERNAME%,%PASSWORD% -uUTL -c show active 
-goto :end
+dbmcli.exe -d %DATABASE% -u %USERNAME%,%PASSWORD% -uUTL -c show active
+IF %ERRORLEVEL% EQU 0 GOTO cleanexit
+exit /B 1
 
 :handle_thaw
 echo ------------------------------------------ 
@@ -48,9 +50,12 @@ echo ***** log active state
 dbmcli.exe -d %DATABASE% -u %USERNAME%,%PASSWORD% -uUTL -c show active 
 echo ***** issue resume 
 dbmcli.exe -d %DATABASE% -u %USERNAME%,%PASSWORD% -uUTL -c util_execute resume logwriter 
+IF %errorlevel% NEQ 0 GOTO :dirtyexit
 echo ***** log active state after resume 
 dbmcli.exe -d %DATABASE% -u %USERNAME%,%PASSWORD% -uUTL -c show active 
-goto :end
+IF %ERRORLEVEL% EQU 0 GOTO cleanexit
+exit /B 1
+
 
 :handle_abort
 echo ------------------------------------------ 
@@ -62,6 +67,11 @@ echo ***** issue resume
 dbmcli.exe -d %DATABASE% -u %USERNAME%,%PASSWORD% -uUTL -c util_execute resume logwriter 
 echo ***** log active state after resume 
 dbmcli.exe -d %DATABASE% -u %USERNAME%,%PASSWORD% -uUTL -c show active 
-goto :end
-:end
-echo Done processing commands
+IF %ERRORLEVEL% EQU 0 GOTO cleanexit
+exit /B 1
+
+:cleanexit
+exit /B 0
+
+:dirtyexit
+exit /B 1
