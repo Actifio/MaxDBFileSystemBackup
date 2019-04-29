@@ -19,7 +19,7 @@ if %TASK% equ freeze goto :handle_freeze
 if %TASK% equ thaw goto :handle_thaw
 if %TASK% equ abort goto :handle_abort
 echo Invalid task was given for the script to run, use init, fini, freeze, thaw or abort
-goto :dirtyexit
+exit /B 1
 
 :handle_init
 echo Got an init command.  Nothing to do
